@@ -3,8 +3,8 @@ vagrantfile:
     vm:
         provider:
             local:
-                box: puphpet/ubuntu1404-x64
-                box_url: puphpet/ubuntu1404-x64
+                box: puphpet/ubuntu1604-x64
+                box_url: puphpet/ubuntu1604-x64
                 box_version: '0'
                 chosen_virtualizer: virtualbox
                 virtualizers:
@@ -15,17 +15,17 @@ vagrantfile:
                     vmware:
                         numvcpus: 1
                     parallels:
-                        use_linked_clone: 0
+                        linked_clone: 0
                         check_guest_tools: 0
                         update_guest_tools: 0
                 machines:
-                    vflm_9prwewfyjgu0:
+                    vflm_s83n269qlttp:
                         id: joomladev1
                         hostname: joomladev1.puphpet
                         network:
                             private_network: 192.168.56.201
                             forwarded_port:
-                                vflmnfp_codfafto6o2d:
+                                vflmnfp_who3ot9q96bd:
                                     host: '5960'
                                     guest: '22'
                         memory: '512'
@@ -33,12 +33,14 @@ vagrantfile:
         provision:
             puppet:
                 manifests_path: puphpet/puppet/manifests
-                module_path: puphpet/puppet/modules
+                module_path:
+                    - puphpet/puppet/modules
+                    - puphpet/puppet/manifests
                 options:
                     - '--verbose'
                     - '--hiera_config /vagrant/puphpet/puppet/hiera.yaml'
         synced_folder:
-            vflsf_go86pe07h6pg:
+            vflsf_81ng0smaixeu:
                 source: ./
                 target: /var/www
                 sync_type: default
@@ -108,16 +110,17 @@ cron:
 nginx:
     install: '0'
     settings:
+        version: present
         default_vhost: 1
-        proxy_buffer_size: 128k
         proxy_buffers: '4 256k'
+        proxy_buffer_size: 128k
         proxy_connect_timeout: 600s
         proxy_send_timeout: 600s
         proxy_read_timeout: 600s
         names_hash_bucket_size: 128
     upstreams: {  }
     vhosts:
-        nxv_2zr7fvl7fwjz:
+        nxv_clnzd8lo7cu3:
             server_name: awesome.dev
             server_aliases:
                 - www.awesome.dev
@@ -137,7 +140,7 @@ nginx:
             rewrite_to_https: '1'
             spdy: '1'
             locations:
-                nxvl_ia5tqga7p18v:
+                nxvl_a1dwa6h0pv0q:
                     location: /
                     try_files:
                         - $uri
@@ -148,7 +151,7 @@ nginx:
                     fastcgi_split_path: ''
                     proxy: ''
                     proxy_redirect: ''
-                nxvl_nw6oaypf10n0:
+                nxvl_mchf9g3g5xta:
                     location: '~ \.php$'
                     try_files:
                         - $uri
@@ -179,7 +182,7 @@ apache:
         - proxy_fcgi
         - rewrite
     vhosts:
-        av_t7yh5qkqtiuv:
+        av_x1kb2s9jxgcm:
             servername: joomla-development.local
             serveraliases:
                 - www.joomla-development.local
@@ -198,7 +201,7 @@ apache:
             ssl_protocol: ''
             ssl_cipher: ''
             directories:
-                avd_ubhapqopjvjo:
+                avd_b5yhaz4vjelt:
                     path: /var/www/joomla-development.local
                     options:
                         - Indexes
@@ -210,13 +213,13 @@ apache:
                         - 'all granted'
                     custom_fragment: ''
                     files_match:
-                        avdfm_golgfz3dpx3s:
+                        avdfm_inkzaui4yf7w:
                             path: \.php$
                             sethandler: 'proxy:fcgi://127.0.0.1:9000'
                             custom_fragment: ''
                             provider: filesmatch
                     provider: directory
-        av_lknp28yphhnf:
+        av_6da4tkyntj8j:
             servername: joomla-testing.local
             serveraliases:
                 - www.joomla-testing.local
@@ -231,7 +234,7 @@ apache:
             ssl_protocol: ''
             ssl_cipher: ''
             directories:
-                dva_buhapqopjvjo:
+                avd_u785d1sn7rnh:
                     path: /var/www/joomla-testing.local
                     options:
                         - Indexes
@@ -243,13 +246,12 @@ apache:
                         - 'all granted'
                     custom_fragment: ''
                     files_match:
-                        dvamf_oglgfz3dpx3s:
+                        avdfm_v2bfyimhbx6r:
                             path: \.php$
                             sethandler: 'proxy:fcgi://127.0.0.1:9000'
                             custom_fragment: ''
                             provider: filesmatch
                     provider: directory
-undefined: null
 letsencrypt:
     install: '1'
     settings:
@@ -258,7 +260,7 @@ letsencrypt:
 php:
     install: '1'
     settings:
-        version: '56'
+        version: '5.6'
     modules:
         php:
             - cli
@@ -277,7 +279,7 @@ php:
     fpm_ini:
         error_log: /var/log/php-fpm.log
     fpm_pools:
-        phpfp_16p3a3lrna2e:
+        phpfp_bgaz5ksmig0w:
             ini:
                 prefix: www
                 listen: '127.0.0.1:9000'
@@ -321,7 +323,7 @@ drush:
 ruby:
     install: '1'
     versions:
-        rv_q7wg9vqk5ep7:
+        rv_ghreq4khucd4:
             default: '1'
             bundler: '1'
             version: 1.9.3
@@ -340,7 +342,6 @@ nodejs:
     npm_packages: {  }
 hhvm:
     install: '0'
-    nightly: 0
     composer: '1'
     composer_home: ''
     settings: {  }
@@ -362,30 +363,30 @@ mariadb:
     adminer: '1'
     users: {  }
     databases:
-        mariadbnd_p8l467joigxd:
+        mariadbnd_82kynl0cicuk:
             name: joomla_development
             sql: ''
-        mariadbnd_bqb9ik5dwo7m:
+        mariadbnd_slg8bd4ex1fr:
             name: joomla_testing
             sql: ''
     grants: {  }
 mysql:
-    install: 0
+    install: '0'
     settings:
         version: '5.6'
         root_password: '123'
         override_options: {  }
     adminer: 0
     users:
-        mysqlnu_3xq1sxzhuqal:
+        mysqlnu_fs46ehdm0zw9:
             name: dbuser
             password: '123'
     databases:
-        mysqlnd_rr20lo6qrzct:
+        mysqlnd_79anw0vtacce:
             name: dbname
             sql: ''
     grants:
-        mysqlng_tr51nc68lxmk:
+        mysqlng_5s49aq84vvmm:
             user: dbuser
             table: '*.*'
             privileges:
@@ -408,7 +409,7 @@ mongodb:
         bind_ip: 127.0.0.1
         port: '27017'
     globals:
-        version: 2.6.0
+        version: '2.6'
     databases: {  }
 redis:
     install: '0'
@@ -450,10 +451,11 @@ elastic_search:
         version: 2.3.1
         java_install: true
     instances:
-        esi_ogjv5l6fczt2:
+        esi_4me54jxzywam:
             name: es-01
 solr:
     install: '0'
     settings:
         version: 4.10.2
         port: '8984'
+
