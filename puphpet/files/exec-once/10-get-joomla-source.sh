@@ -1,16 +1,19 @@
 #!usr/bin/env bash
 
-echo "Creating folders ..."
-
+echo "[START] Creating folders ..."
 cd /var/www/
 mkdir -p joomla-development.local
 mkdir -p joomla-testing.local
+echo "[DONE] Finished creating folders."
 
-echo "-- Cloning the Jommla! Git repository ..."
-git clone https://github.com/joomla/joomla-cms.git joomla-development.local
+echo "[START] Cloning the Jommla! Git repository (cache)..."
+git clone --mirror https://github.com/joomla/joomla-cms.git /home/vagrant/gitcaches/joomla.reference
+echo "[DONE] Cloning the Jommla! Git repository."
+
+echo "[START] Copying files ... "
+git clone --reference /home/vagrant/gitcaches/joomla.reference https://github.com/joomla/joomla-cms.git joomla-development.local
 cd joomla-development.local
 git checkout staging
 git pull
 cp -r /var/www/joomla-development.local/. /var/www/joomla-testing.local
-
-echo "Finished creating folders."
+echo "[DONE] Copying files."
