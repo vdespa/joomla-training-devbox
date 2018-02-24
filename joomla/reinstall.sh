@@ -27,9 +27,9 @@ function removeDatabase {
 
 function downloadJoomla {
 	echo "[START] Cloning the Jommla! Git repository ..."
-	git clone --reference /home/vagrant/gitcaches/joomla.reference https://github.com/joomla/joomla-cms.git /var/www/$DOMAIN
+	git clone https://github.com/joomla/joomla-cms.git /var/www/$DOMAIN
 	cd /var/www/$DOMAIN
-	git checkout staging
+	git checkout 3.6.5
 	git pull
 	echo "[DONE] Cloning the Jommla!."
 }
