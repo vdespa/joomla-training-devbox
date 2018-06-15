@@ -3,8 +3,8 @@ vagrantfile:
     vm:
         provider:
             local:
-                box: puphpet/ubuntu1604-x64
-                box_url: puphpet/ubuntu1604-x64
+                box: bento/ubuntu-16.04
+                box_url: 'false'
                 box_version: '0'
                 chosen_virtualizer: virtualbox
                 virtualizers:
@@ -38,7 +38,7 @@ vagrantfile:
                     - puphpet/puppet/manifests
                 options:
                     - '--verbose'
-                    - '--hiera_config /vagrant/puphpet/puppet/hiera.yaml'
+                    - '--hiera_config /opt/puphpet/puppet/hiera.yaml'
         synced_folder:
             vflsf_81ng0smaixeu:
                 source: ./
@@ -60,8 +60,8 @@ vagrantfile:
                         - .vagrant/
                         - .git/
                     auto: 'true'
-                owner: www-data
-                group: www-data
+                owner: vagrant
+                group: vagrant
         usable_port_range:
             start: 10200
             stop: 10500
@@ -201,8 +201,10 @@ apache:
             ssl_protocol: ''
             ssl_cipher: ''
             directories:
-                avd_b5yhaz4vjelt:
+                php_html:
+                    provider: directory
                     path: /var/www/joomla-development.local
+                    directoryindex: 'index.php index.html'
                     options:
                         - Indexes
                         - FollowSymlinks
@@ -211,14 +213,10 @@ apache:
                         - All
                     require:
                         - 'all granted'
-                    custom_fragment: ''
-                    files_match:
-                        avdfm_inkzaui4yf7w:
-                            path: \.php$
-                            sethandler: 'proxy:fcgi://127.0.0.1:9000'
-                            custom_fragment: ''
-                            provider: filesmatch
-                    provider: directory
+                php_php:
+                    provider: filesmatch
+                    path: \.php$
+                    sethandler: 'proxy:fcgi://127.0.0.1:9000'
         av_6da4tkyntj8j:
             servername: joomla-testing.local
             serveraliases:
@@ -234,8 +232,10 @@ apache:
             ssl_protocol: ''
             ssl_cipher: ''
             directories:
-                avd_u785d1sn7rnh:
+                php_html:
+                    provider: directory
                     path: /var/www/joomla-testing.local
+                    directoryindex: 'index.php index.html'
                     options:
                         - Indexes
                         - FollowSymlinks
@@ -244,14 +244,10 @@ apache:
                         - All
                     require:
                         - 'all granted'
-                    custom_fragment: ''
-                    files_match:
-                        avdfm_v2bfyimhbx6r:
-                            path: \.php$
-                            sethandler: 'proxy:fcgi://127.0.0.1:9000'
-                            custom_fragment: ''
-                            provider: filesmatch
-                    provider: directory
+                php_php:
+                    provider: filesmatch
+                    path: \.php$
+                    sethandler: 'proxy:fcgi://127.0.0.1:9000'
 letsencrypt:
     install: '1'
     settings:
