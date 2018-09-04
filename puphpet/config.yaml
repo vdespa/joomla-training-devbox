@@ -60,8 +60,8 @@ vagrantfile:
                         - .vagrant/
                         - .git/
                     auto: 'true'
-                owner: vagrant
-                group: vagrant
+                owner: www-data
+                group: www-data
         usable_port_range:
             start: 10200
             stop: 10500
